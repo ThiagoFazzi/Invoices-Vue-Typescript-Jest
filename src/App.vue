@@ -3,10 +3,36 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
+      <a href="#" @click="login">Login</a>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script lang="ts">
+import Vue from 'vue';
+import * as authStore from '@/store/modules/auth';
+
+export default Vue.extend({
+  computed: {
+    userName() {
+      return authStore.getters.authUser?.name;
+    },
+  },
+  methods: {
+    async login() {
+      const username = 'user';
+      const password = 'Secret';
+
+      try {
+        await authStore.actions.login({ username, password });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+});
+</script>
 
 <style lang="scss">
 #app {
