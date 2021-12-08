@@ -36,11 +36,28 @@
 </template>
 
 <script lang="ts">
+import Decimal from 'decimal.js';
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Invoice as TypeInvoice } from '@/Types/invoice';
+import User from '@/modules/user';
+import Product from '@/modules/product';
+import LineItem from '@/modules/lineItem';
+import Invoice from '@/modules/invoice';
 
 @Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
+
+  // eslint-disable-next-line class-methods-use-this
+  createInvoice(): TypeInvoice {
+    const user = User.create('Fake User', 'http://avatar-url.com');
+    const product = Product.create('Fake Product', 'not a real product');
+    const lineItem = LineItem.create(product, new Decimal(10), 1);
+
+    let invoice = Invoice.create(user);
+    invoice = Invoice.addLineItem(invoice, lineItem);
+    return invoice;
+  }
 }
 </script>
 
