@@ -3,8 +3,8 @@ import { User } from './user';
 import { Product } from './product';
 
 export interface LineItem {
-  product: Product
-  rate: Decimal
+  product: Product | null
+  rate: Decimal | null
   quantity: number
 }
 
