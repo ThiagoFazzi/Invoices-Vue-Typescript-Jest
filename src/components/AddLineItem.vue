@@ -16,6 +16,7 @@ import { Vue, Component, Emit } from 'vue-property-decorator';
 import Decimal from 'decimal.js';
 import EditLineItemModal from '@/components/EditLineItemModal.vue';
 import { LineItem as TypeLineItem } from '@/Types/invoice';
+import { Partial as TypePartial } from '@/Types/utils';
 
 @Component({
   components: {
@@ -26,7 +27,7 @@ import { LineItem as TypeLineItem } from '@/Types/invoice';
 export default class AddLineItem extends Vue {
   showModal = false
 
-  static newLineItem(): Partial<TypeLineItem> {
+  static newLineItem(): TypePartial<TypeLineItem> {
     return {
       product: null,
       rate: new Decimal(0),
