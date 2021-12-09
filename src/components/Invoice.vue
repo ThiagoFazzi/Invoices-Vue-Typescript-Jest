@@ -33,6 +33,7 @@ import {
   Emit,
 } from 'vue-property-decorator';
 import { Invoice as TypeInvoice, LineItem as TypeLineItem } from '@/Types/invoice';
+import InvoiceModule from '@/modules/invoice';
 import LineItem from '@/components/LineItem.vue';
 import AddLineItem from '@/components/AddLineItem.vue';
 
@@ -49,17 +50,17 @@ export default class Invoice extends Vue {
 
   @Emit('input')
   addLineItem(newLIneItem: TypeLineItem) : TypeInvoice {
-    return Invoice.addLineItem(this.value, newLIneItem);
+    return InvoiceModule.addLineItem(this.value, newLIneItem);
   }
 
   @Emit('input')
   editLineItem(index: number, newLIneItem: TypeLineItem) : TypeInvoice {
-    return Invoice.changeLineItem(this.value, index, newLIneItem);
+    return InvoiceModule.changeLineItem(this.value, index, newLIneItem);
   }
 
   @Emit('input')
   removeLineItem(index: number) : TypeInvoice {
-    return Invoice.removeLineItem(this.value, index);
+    return InvoiceModule.removeLineItem(this.value, index);
   }
 }
 </script>
