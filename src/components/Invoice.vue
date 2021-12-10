@@ -14,7 +14,7 @@
           @remove="removeLineItem"
         />
       </template>
-      <p v-if="value.lineitems.length === 0">
+      <p v-if="value.lineItems.length === 0">
         No line items
       </p>
     </div>
@@ -48,14 +48,18 @@ export default class Invoice extends Vue {
   @Prop({ required: true, type: Object })
   value!: TypeInvoice
 
-  @Emit('input')
-  addLineItem(newLIneItem: TypeLineItem) : TypeInvoice {
-    return InvoiceModule.addLineItem(this.value, newLIneItem);
+  mounted() : void {
+    console.log(this.value);
   }
 
   @Emit('input')
-  editLineItem(index: number, newLIneItem: TypeLineItem) : TypeInvoice {
-    return InvoiceModule.changeLineItem(this.value, index, newLIneItem);
+  addLineItem(newLineItem: TypeLineItem) : TypeInvoice {
+    return InvoiceModule.addLineItem(this.value, newLineItem);
+  }
+
+  @Emit('input')
+  editLineItem(index: number, newLineItem: TypeLineItem) : TypeInvoice {
+    return InvoiceModule.changeLineItem(this.value, index, newLineItem);
   }
 
   @Emit('input')
@@ -64,3 +68,19 @@ export default class Invoice extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.heading {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 5px;
+}
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+</style>

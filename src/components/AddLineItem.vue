@@ -27,7 +27,9 @@ import { Partial as TypePartial } from '@/Types/utils';
 export default class AddLineItem extends Vue {
   showModal = false
 
-  static newLineItem(): TypePartial<TypeLineItem> {
+  // eslint-disable-next-line class-methods-use-this
+  newLineItem(): TypePartial<TypeLineItem> {
+    console.log('here');
     return {
       product: null,
       rate: new Decimal(0),

@@ -27,7 +27,7 @@
       </label>
     </div>
     <div slot="footer">
-      <button @click="updateLineItem">Ok</button>
+      <button @click="updateLineItem" :disabled="!isValidLineItem">Ok</button>
       <button @click="$emit('close')">Cancel</button>
     </div>
   </SimpleModal>
@@ -60,6 +60,10 @@ export default class EditLineItemModal extends Vue {
   @Prop({ type: String, default: 'edit' })
   mode!: 'edit' | 'create'
 
+  mounted() : void {
+    console.log(this.item);
+  }
+
   localLineItem: TypePartial<TypeLineItem> = {
     product: null,
     rate: null,
@@ -72,7 +76,8 @@ export default class EditLineItemModal extends Vue {
 
   get rate() : number | null{
     const { rate } = this.localLineItem;
-    return rate ? rate.toNumber() : null;
+    console.log(rate);
+    return rate ? Number(rate) : null;
   }
 
   set rate(val: number | null) {
@@ -81,11 +86,33 @@ export default class EditLineItemModal extends Vue {
 
   @Watch('value', { immediate: true, deep: true })
   valueChangeHandler() : void {
+    console.log(this.item);
     this.localLineItem = JSON.parse(JSON.stringify(this.item));
   }
 
   updateLineItem(): void {
     this.$emit('update', this.localLineItem);
   }
+
+  get isValidLineItem() : boolean {
+    return (
+      !!this.localLineItem.product
+      && !!this.localLineItem.rate
+      && typeof this.localLineItem.quantity === 'number'
+    );
+  }
 }
 </script>
+
+<style scoped>
+.edit-line-item {
+  text-align: left;
+}
+.edit-line-item-body {
+  display: grid;
+  grid-template-columns: 1fr 100px 100px;
+}
+.number-input {
+  width: 60px;
+}
+</style>
